@@ -15,52 +15,6 @@ library(tidyverse)
 library(scales)
 ```
 
-
-```R
-library(testthat) 
-library(IRkernel.testthat)
-
-run_tests({
-    test_that("the packages are loaded", {
-    expect_true( all(c("package:ggplot2", "package:readr", "package:dplyr") %in% search() ), 
-        info = "The dplyr, readr and ggplot2 packages should be loaded using import().")
-    })
-})
-```
-
-
-
-
-    <ProjectReporter>
-      Inherits from: <ListReporter>
-      Public:
-        .context: NULL
-        .end_context: function (context) 
-        .start_context: function (context) 
-        add_result: function (context, test, result) 
-        all_tests: environment
-        cat_line: function (...) 
-        cat_tight: function (...) 
-        clone: function (deep = FALSE) 
-        current_expectations: environment
-        current_file: some name
-        current_start_time: 21.572 0.236 3776.557 0 0
-        dump_test: function (test) 
-        end_context: function (context) 
-        end_reporter: function () 
-        end_test: function (context, test) 
-        get_results: function () 
-        initialize: function (...) 
-        is_full: function () 
-        out: 3
-        results: environment
-        rule: function (...) 
-        start_context: function (context) 
-        start_file: function (name) 
-        start_reporter: function () 
-        start_test: function (context, test) 
-
-
 ## 2. The data set
 <p>The dataset we will use contains one week of data from a sample of players who played Candy Crush back in 2014. The data is also from a single <em>episode</em>, that is, a set of 15 levels. It has the following columns:</p>
 <ul>
