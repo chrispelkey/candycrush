@@ -76,7 +76,7 @@ run_tests({
 
 ```R
 # Reading in the data
-data <- read_csv("datasets/candy_crush.csv")
+data <- read_csv("candy_crush.csv")
 
 # Printing out the first couple of rows
 head(data)
