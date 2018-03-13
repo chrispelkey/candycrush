@@ -1,7 +1,6 @@
 
 ## 1. Candy Crush Saga
-<p><a href="https://king.com/game/candycrush">Candy Crush Saga</a> is a hit mobile game developed by King (part of Activision|Blizzard) that is played by millions of people all around the world. The game is structured as a series of levels where players need to match similar candy together to (hopefully) clear the level and keep progressing on the level map. If you are one of the few that haven't played Candy Crush, here's a short demo:</p>
-<p>[https://s3.amazonaws.com/assets.datacamp.com/production/project_139/img/candy_crush_video.jpeg](https://youtu.be/HGLGxnfs_t8) </p>
+<p><a href="https://king.com/game/candycrush">Candy Crush Saga</a> is a hit mobile game developed by King (part of Activision|Blizzard) that is played by millions of people all around the world. The game is structured as a series of levels where players need to match similar candy together to (hopefully) clear the level and keep progressing on the level map. 
 <p>Candy Crush has more than 3000 levels, and new ones are added every week. That is a lot of levels! And with that many levels, it's important to get <em>level difficulty</em> just right. Too easy and the game gets boring, too hard and players become frustrated and quit playing.</p>
 <p>In this project, we will see how we can use data collected from players to estimate level difficulty. Let's start by loading in the packages we're going to need.</p>
 
@@ -57,59 +56,10 @@ head(data)
 	<tr><td>a32c5e9700ed356dc8dd5bb3230c5227</td><td>2014-01-07                      </td><td>15                              </td><td>6                               </td><td>0                               </td></tr>
 	<tr><td>b94d403ac4edf639442f93eeffdc7d92</td><td>2014-01-01                      </td><td> 8                              </td><td>8                               </td><td>1                               </td></tr>
 </tbody>
-</table>
-
-
-
-
-```R
-library(tidyverse)
-
-run_tests({
-    test_that("data is read in correctly", {
-        correct_data <- read_csv("datasets/candy_crush.csv")
-        expect_equal(correct_data, data, 
-            info = "data should countain datasets/candy_crush.csv read in using read_csv")
-        })
-})
-```
-
-
-
-
-    <ProjectReporter>
-      Inherits from: <ListReporter>
-      Public:
-        .context: NULL
-        .end_context: function (context) 
-        .start_context: function (context) 
-        add_result: function (context, test, result) 
-        all_tests: environment
-        cat_line: function (...) 
-        cat_tight: function (...) 
-        clone: function (deep = FALSE) 
-        current_expectations: environment
-        current_file: some name
-        current_start_time: 21.648 0.24 3776.638 0 0
-        dump_test: function (test) 
-        end_context: function (context) 
-        end_reporter: function () 
-        end_test: function (context, test) 
-        get_results: function () 
-        initialize: function (...) 
-        is_full: function () 
-        out: 3
-        results: environment
-        rule: function (...) 
-        start_context: function (context) 
-        start_file: function (name) 
-        start_reporter: function () 
-        start_test: function (context, test) 
-
+</table> 
 
 ## 3. Checking the data set
 <p>Now that we have loaded the dataset let's count how many players we have in the sample and how many days worth of data we have.</p>
-
 
 ```R
 print("Number of players:")
@@ -123,49 +73,6 @@ print(max(data$dt)-min(data$dt))
     [1] 6814
     [1] "Period for which we have data:"
     Time difference of 6 days
-
-
-
-```R
-run_tests({
-    test_that("nothing", {
-        expect_true(TRUE, info = "")
-    })
-})
-```
-
-
-
-
-    <ProjectReporter>
-      Inherits from: <ListReporter>
-      Public:
-        .context: NULL
-        .end_context: function (context) 
-        .start_context: function (context) 
-        add_result: function (context, test, result) 
-        all_tests: environment
-        cat_line: function (...) 
-        cat_tight: function (...) 
-        clone: function (deep = FALSE) 
-        current_expectations: environment
-        current_file: some name
-        current_start_time: 21.728 0.244 3776.72 0 0
-        dump_test: function (test) 
-        end_context: function (context) 
-        end_reporter: function () 
-        end_test: function (context, test) 
-        get_results: function () 
-        initialize: function (...) 
-        is_full: function () 
-        out: 3
-        results: environment
-        rule: function (...) 
-        start_context: function (context) 
-        start_file: function (name) 
-        start_reporter: function () 
-        start_test: function (context, test) 
-
 
 ## 4. Computing level difficulty
 <p>Within each Candy Crush episode, there is a mix of easier and tougher levels. Luck and individual skill make the number of attempts required to pass a level different from player to player. The assumption is that difficult levels require more attempts on average than easier ones. That is, <em>the harder</em> a level is, <em>the lower</em> the probability to pass that level in a single attempt is.</p>
