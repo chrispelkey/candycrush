@@ -72,12 +72,11 @@ print(max(data$dt)-min(data$dt))
     [1] "Number of players:"
     [1] 6814
     [1] "Period for which we have data:"
-    Time difference of 6 days
+    [1] Time difference of 6 days
 
 ## 4. Computing level difficulty
 <p>Within each Candy Crush episode, there is a mix of easier and tougher levels. Luck and individual skill make the number of attempts required to pass a level different from player to player. The assumption is that difficult levels require more attempts on average than easier ones. That is, <em>the harder</em> a level is, <em>the lower</em> the probability to pass that level in a single attempt is.</p>
-<p>A simple approach to model this probability is as a <a href="https://en.wikipedia.org/wiki/Bernoulli_process">Bernoulli process</a>; as a binary outcome (you either win or lose) characterized by a single parameter <em>p<sub>win</sub></em>: the probability of winning the level in a single attempt. This probability can be estimated for each level as:</p>
-<p><img src="https://s3.amazonaws.com/assets.datacamp.com/production/project_139/img/latex1.png" style="width:150px"></p>
+<p>A simple approach to model this probability is as a <a href="https://en.wikipedia.org/wiki/Bernoulli_process">Bernoulli process</a>; as a binary outcome (you either win or lose) characterized by a single parameter <em>p<sub>win</sub></em>: the probability of winning the level in a single attempt.
 <!-- $$p_{win} = \frac{\sum wins}{\sum attempts}$$ -->
 <p>For example, let's say a level has been played 10 times and 2 of those attempts ended up in a victory. Then the probability of winning in a single attempt would be <em>p<sub>win</sub></em> = 2 / 10 = 20%.</p>
 <p>Now, let's compute the difficulty <em>p<sub>win</sub></em> separately for each of the 15 levels.</p>
@@ -113,56 +112,7 @@ print(difficulty)
     14    14     2772   777 0.280 
     15    15    30374  1157 0.0381
 
-
-
-```R
-run_tests({
-    test_that("p_win is calculated correctly", {
-        correct_difficulty <- data %>%
-            group_by(level) %>%
-            summarise(attempts = sum(num_attempts), wins = sum(num_success)) %>%
-            mutate(p_win = wins / attempts)
-        expect_equal(correct_difficulty$p_win, difficulty$p_win, 
-            info = "difficulty$p_win should be estimated probability to pass each level in a single attempt")
-        })
-})
-```
-
-
-
-
-    <ProjectReporter>
-      Inherits from: <ListReporter>
-      Public:
-        .context: NULL
-        .end_context: function (context) 
-        .start_context: function (context) 
-        add_result: function (context, test, result) 
-        all_tests: environment
-        cat_line: function (...) 
-        cat_tight: function (...) 
-        clone: function (deep = FALSE) 
-        current_expectations: environment
-        current_file: some name
-        current_start_time: 21.856 0.244 3776.85 0 0
-        dump_test: function (test) 
-        end_context: function (context) 
-        end_reporter: function () 
-        end_test: function (context, test) 
-        get_results: function () 
-        initialize: function (...) 
-        is_full: function () 
-        out: 3
-        results: environment
-        rule: function (...) 
-        start_context: function (context) 
-        start_file: function (name) 
-        start_reporter: function () 
-        start_test: function (context, test) 
-
-
 ## 5. Plotting difficulty profile
-<p><img src="https://s3.amazonaws.com/assets.datacamp.com/production/project_139/img/tiffi.jpeg" style="height:150px; float:left"> </p>
 <p>Great! We now have the difficulty for all the 15 levels in the episode. Keep in mind that, as we measure difficulty as the probability to pass a level in a single attempt, a <em>lower</em> value (a smaller probability of winning the level) implies a <em>higher</em> level difficulty.</p>
 <p>Now that we have the difficulty of the episode we should plot it. Let's plot a line graph with the levels on the X-axis and the difficulty (<em>p<sub>win</sub></em>) on the Y-axis. We call this plot the <em>difficulty profile</em> of the episode.</p>
 
@@ -177,59 +127,9 @@ ggplot(data=difficulty, aes(x=level, y=p_win, group=1)) +
     scale_y_continuous(labels=percent)+
     labs(x = "Level", y = "Percentage of Wins", caption = "Level Difficulty")
 ```
-
-
-
-
 ![png](output_13_1.png)
 
-
-
 ![png](output_13_2.png)
-
-
-
-```R
-run_tests({
-    test_that("the student plotted a ggplot", {
-    expect_true('ggplot' %in% class(last_plot()), 
-        info = "You should plot difficulty using ggplot.")
-    })
-})
-```
-
-
-
-
-    <ProjectReporter>
-      Inherits from: <ListReporter>
-      Public:
-        .context: NULL
-        .end_context: function (context) 
-        .start_context: function (context) 
-        add_result: function (context, test, result) 
-        all_tests: environment
-        cat_line: function (...) 
-        cat_tight: function (...) 
-        clone: function (deep = FALSE) 
-        current_expectations: environment
-        current_file: some name
-        current_start_time: 22.148 0.244 3777.148 0 0
-        dump_test: function (test) 
-        end_context: function (context) 
-        end_reporter: function () 
-        end_test: function (context, test) 
-        get_results: function () 
-        initialize: function (...) 
-        is_full: function () 
-        out: 3
-        results: environment
-        rule: function (...) 
-        start_context: function (context) 
-        start_file: function (name) 
-        start_reporter: function () 
-        start_test: function (context, test) 
-
 
 ## 6. Spotting hard levels
 <p>What constitutes a <em>hard</em> level is subjective. However, to keep things simple, we could define a threshold of difficulty, say 10%, and label levels with <em>p<sub>win</sub></em> &lt; 10% as <em>hard</em>. It's relatively easy to spot these hard levels on the plot, but we can make the plot more friendly by explicitly highlighting the hard levels.</p>
@@ -246,80 +146,26 @@ ggplot(data=difficulty, aes(x=level, y=p_win, group=1)) +
     labs(x = "Level", y = "Percentage of Wins", caption = "Level Difficulty")+ 
     geom_hline(yintercept=.10, linetype="dashed")
 ```
-
-
-
-
 ![png](output_16_1.png)
-
-
 
 ![png](output_16_2.png)
 
-
-
-```R
-run_tests({
-    plot_layers <- sapply(last_plot()$layers, function(layer)  class(layer$geom)[1])
-    test_that("the student has plotted lines, points and a hline", {
-    expect_true(all(c('GeomLine', 'GeomPoint', 'GeomHline') %in%  plot_layers), 
-        info = "The plot should include lines between the datapoints, points at the datapoints and a horisontal line.")
-    })
-})
-```
-
-
-
-
-    <ProjectReporter>
-      Inherits from: <ListReporter>
-      Public:
-        .context: NULL
-        .end_context: function (context) 
-        .start_context: function (context) 
-        add_result: function (context, test, result) 
-        all_tests: environment
-        cat_line: function (...) 
-        cat_tight: function (...) 
-        clone: function (deep = FALSE) 
-        current_expectations: environment
-        current_file: some name
-        current_start_time: 22.444 0.244 3777.439 0 0
-        dump_test: function (test) 
-        end_context: function (context) 
-        end_reporter: function () 
-        end_test: function (context, test) 
-        get_results: function () 
-        initialize: function (...) 
-        is_full: function () 
-        out: 3
-        results: environment
-        rule: function (...) 
-        start_context: function (context) 
-        start_file: function (name) 
-        start_reporter: function () 
-        start_test: function (context, test) 
-
-
 ## 7. Computing uncertainty
 <p><img src="https://s3.amazonaws.com/assets.datacamp.com/production/project_139/img/mr_toffee.jpeg" style="height:350px; float:right"> </p>
-<p>As Data Scientists we should always report some measure of the uncertainty of any provided numbers. Maybe tomorrow, another sample will give us slightly different values for the difficulties? Here we will simply use the <a href="https://en.wikipedia.org/wiki/Standard_error"><em>Standard error</em></a> as a measure of uncertainty:</p>
-<p><img src="https://s3.amazonaws.com/assets.datacamp.com/production/project_139/img/latex2.png" style="width:115px"></p>
+<p>As Data Scientists we should always report some measure of the uncertainty of any provided numbers. Maybe tomorrow, another sample will give us slightly different values for the difficulties? Here we will simply use the <em>standard error</em></a> as a measure of uncertainty:</p>
+</p>
 <!-- $$
 \sigma_{error} \approx \frac{\sigma_{sample}}{\sqrt{n}}
 $$ -->
-<p>Here <em>n</em> is the number of datapoints and <em>σ<sub>sample</sub></em> is the sample standard deviation. For a Bernoulli process, the sample standard deviation is: </p>
-<p><img src="https://s3.amazonaws.com/assets.datacamp.com/production/project_139/img/latex3.png" style="width:195px"></p>
+<p>Here <em>n</em> is the number of datapoints and <em>σ<sub>sample</sub></em> is the sample standard deviation.
 <!-- $$
 \sigma_{sample} = \sqrt{p_{win} (1 - p_{win})} 
 $$ -->
-<p>Therefore, we can calculate the standard error like this:</p>
-<p><img src="https://s3.amazonaws.com/assets.datacamp.com/production/project_139/img/latex4.png" style="width:195px"></p>
+
 <!-- $$
 \sigma_{error} \approx \sqrt{\frac{p_{win}(1 - p_{win})}{n}}
 $$ -->
 <p>We already have all we need in the <code>difficulty</code> data frame! Every level has been played <em>n</em> number of times and we have their difficulty <em>p<sub>win</sub></em>. Now, let's calculate the standard error for each level.</p>
-
 
 ```R
 # Computing the standard error of p_win for each level
@@ -328,8 +174,6 @@ difficulty <- difficulty %>%
 
 head(difficulty)
 ```
-
-
 <table>
 <thead><tr><th scope=col>level</th><th scope=col>attempts</th><th scope=col>wins</th><th scope=col>p_win</th><th scope=col>error</th></tr></thead>
 <tbody>
@@ -341,53 +185,6 @@ head(difficulty)
 	<tr><td>6          </td><td>1591       </td><td>668        </td><td>0.41986172 </td><td>0.012373251</td></tr>
 </tbody>
 </table>
-
-
-
-
-```R
-run_tests({
-    test_that("error is correct", {
-        correct_difficulty <- difficulty %>%
-            mutate(error = sqrt(p_win * (1 - p_win) / attempts))
-        expect_equal(correct_difficulty$error, difficulty$error,
-            info = "difficulty$error should be calculated as sqrt(p_win * (1 - p_win) / attempts)")
-    })
-})
-```
-
-
-
-
-    <ProjectReporter>
-      Inherits from: <ListReporter>
-      Public:
-        .context: NULL
-        .end_context: function (context) 
-        .start_context: function (context) 
-        add_result: function (context, test, result) 
-        all_tests: environment
-        cat_line: function (...) 
-        cat_tight: function (...) 
-        clone: function (deep = FALSE) 
-        current_expectations: environment
-        current_file: some name
-        current_start_time: 22.488 0.248 3777.487 0 0
-        dump_test: function (test) 
-        end_context: function (context) 
-        end_reporter: function () 
-        end_test: function (context, test) 
-        get_results: function () 
-        initialize: function (...) 
-        is_full: function () 
-        out: 3
-        results: environment
-        rule: function (...) 
-        start_context: function (context) 
-        start_file: function (name) 
-        start_reporter: function () 
-        start_test: function (context, test) 
-
 
 ## 8. Showing uncertainty
 <p>Now that we have a measure of uncertainty for each levels' difficulty estimate let's use <em>error bars</em> to show this uncertainty in the plot. We will set the length of the error bars to one standard error. The upper limit and the lower limit of each error bar should then be <em>p<sub>win</sub></em> + <em>σ<sub>error</sub></em> and <em>p<sub>win</sub></em> - <em>σ<sub>error</sub></em>, respectively.</p>
