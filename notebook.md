@@ -146,8 +146,6 @@ ggplot(data=difficulty, aes(x=level, y=p_win, group=1)) +
     labs(x = "Level", y = "Percentage of Wins", caption = "Level Difficulty")+ 
     geom_hline(yintercept=.10, linetype="dashed")
 ```
-![png](output_16_1.png)
-
 ![png](output_16_2.png)
 
 ## 7. Computing uncertainty
@@ -202,61 +200,8 @@ ggplot(data=difficulty, aes(x=level, y=p_win, group=1)) +
     geom_hline(yintercept=.10, linetype="dashed")+
     geom_errorbar(aes(ymin=(p_win-error), ymax=(p_win+error)))
 ```
-
-
-
-
-![png](output_22_1.png)
-
-
-
 ![png](output_22_2.png)
-
-
-
 ```R
-run_tests({
-    plot_layers <- sapply(last_plot()$layers, function(layer)  class(layer$geom)[1])
-    test_that("the student has plotted lines, points and a hline", {
-    expect_true("GeomErrorbar" %in%  plot_layers, 
-        info = "The plot should include error bats using geom_errorbar.")
-    })
-})
-```
-
-
-
-
-    <ProjectReporter>
-      Inherits from: <ListReporter>
-      Public:
-        .context: NULL
-        .end_context: function (context) 
-        .start_context: function (context) 
-        add_result: function (context, test, result) 
-        all_tests: environment
-        cat_line: function (...) 
-        cat_tight: function (...) 
-        clone: function (deep = FALSE) 
-        current_expectations: environment
-        current_file: some name
-        current_start_time: 22.8 0.252 3777.806 0 0
-        dump_test: function (test) 
-        end_context: function (context) 
-        end_reporter: function () 
-        end_test: function (context, test) 
-        get_results: function () 
-        initialize: function (...) 
-        is_full: function () 
-        out: 3
-        results: environment
-        rule: function (...) 
-        start_context: function (context) 
-        start_file: function (name) 
-        start_reporter: function () 
-        start_test: function (context, test) 
-
-
 ## 9. A final metric
 <p>It looks like our difficulty estimates are pretty precise! Using this plot, a level designer can quickly spot where the hard levels are and also see if there seems to be too many hard levels in the episode.</p>
 <p>One question a level designer might ask is: "How likely is it that a player will complete the episode without losing a single time?" Let's calculate this using the estimated level difficulties!</p>
@@ -273,50 +218,6 @@ p
 9.44714093448606e-12
 
 
-
-```R
-run_tests({
-    test_that("p is correct", {
-        correct_p <- prod(difficulty$p_win)
-        expect_equal(correct_p, p,
-            info = "p should be calculated as the product of difficulty$p_win .")
-    })
-})
-```
-
-
-
-
-    <ProjectReporter>
-      Inherits from: <ListReporter>
-      Public:
-        .context: NULL
-        .end_context: function (context) 
-        .start_context: function (context) 
-        add_result: function (context, test, result) 
-        all_tests: environment
-        cat_line: function (...) 
-        cat_tight: function (...) 
-        clone: function (deep = FALSE) 
-        current_expectations: environment
-        current_file: some name
-        current_start_time: 22.856 0.252 3777.861 0 0
-        dump_test: function (test) 
-        end_context: function (context) 
-        end_reporter: function () 
-        end_test: function (context, test) 
-        get_results: function () 
-        initialize: function (...) 
-        is_full: function () 
-        out: 3
-        results: environment
-        rule: function (...) 
-        start_context: function (context) 
-        start_file: function (name) 
-        start_reporter: function () 
-        start_test: function (context, test) 
-
-
 ## 10. Should our level designer worry?
 <p>Given the probability we just calculated, should our level designer worry about that a lot of players might complete the episode in one attempt?</p>
 
@@ -326,46 +227,3 @@ run_tests({
 # players will complete the episode in one attempt?
 should_the_designer_worry = FALSE
 ```
-
-
-```R
-run_tests({
-    test_that("should_the_designer_worry is FALSE", {
-    expect_false(should_the_designer_worry,
-        info = "The probability is really small, so I don't think the designer should worry that much...")
-    })
-})
-```
-
-
-
-
-    <ProjectReporter>
-      Inherits from: <ListReporter>
-      Public:
-        .context: NULL
-        .end_context: function (context) 
-        .start_context: function (context) 
-        add_result: function (context, test, result) 
-        all_tests: environment
-        cat_line: function (...) 
-        cat_tight: function (...) 
-        clone: function (deep = FALSE) 
-        current_expectations: environment
-        current_file: some name
-        current_start_time: 22.9 0.256 3777.907 0 0
-        dump_test: function (test) 
-        end_context: function (context) 
-        end_reporter: function () 
-        end_test: function (context, test) 
-        get_results: function () 
-        initialize: function (...) 
-        is_full: function () 
-        out: 3
-        results: environment
-        rule: function (...) 
-        start_context: function (context) 
-        start_file: function (name) 
-        start_reporter: function () 
-        start_test: function (context, test) 
-
