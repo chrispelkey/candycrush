@@ -127,8 +127,6 @@ ggplot(data=difficulty, aes(x=level, y=p_win, group=1)) +
     scale_y_continuous(labels=percent)+
     labs(x = "Level", y = "Percentage of Wins", caption = "Level Difficulty")
 ```
-![png](output_13_1.png)
-
 ![png](output_13_2.png)
 
 ## 6. Spotting hard levels
@@ -149,7 +147,6 @@ ggplot(data=difficulty, aes(x=level, y=p_win, group=1)) +
 ![png](output_16_2.png)
 
 ## 7. Computing uncertainty
-<p><img src="https://s3.amazonaws.com/assets.datacamp.com/production/project_139/img/mr_toffee.jpeg" style="height:350px; float:right"> </p>
 <p>As Data Scientists we should always report some measure of the uncertainty of any provided numbers. Maybe tomorrow, another sample will give us slightly different values for the difficulties? Here we will simply use the <em>standard error</em></a> as a measure of uncertainty:</p>
 </p>
 <!-- $$
