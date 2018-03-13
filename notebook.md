@@ -209,10 +209,8 @@ ggplot(data=difficulty, aes(x=level, y=p_win, group=1)) +
 p <- prod(difficulty$p_win)
 # Printing it out
 p
+[1] 9.44714093448606e-12
 ```
-
-
-9.44714093448606e-12
 
 
 ## 10. Should our level designer worry?
